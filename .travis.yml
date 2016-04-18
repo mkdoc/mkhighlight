@@ -4,6 +4,8 @@ branches:
   except:
     - develop
 script: npm run cover
+before_install:
+  - sudo apt-get install -y source-highlight
 node_js:
   - '4.1'
   - '4.0'
