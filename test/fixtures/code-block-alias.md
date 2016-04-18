@@ -1,0 +1,3 @@
+```typescript
+var foo = 'bar';
+```
