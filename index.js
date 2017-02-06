@@ -15,10 +15,13 @@ var spawn = require('child_process').spawn
  *  @option {String} out output format.
  *  @option {Object} alias map of info string languages to source languages.
  *  @option {Boolean} lines number lines in highlighted output.
+ *  @option {Boolean} colons remove colons from line numbers.
  *  @option {Boolean} preserve Keep a `<code>` element in the result.
  */
 function highlight(through, ast, opts) {
   var Node = ast.Node;
+
+  opts.colons = opts.colons === undefined ? true : opts.colons
 
   function transform(chunk, encoding, cb) {
     var scope = this;
@@ -72,6 +75,9 @@ function highlight(through, ast, opts) {
             // add chunks to the stream
             next = doc.firstChild;
 
+            // strip obsolete tags, breaks HTML5 validation
+            next.literal = next.literal.replace(/<\/?tt>/g, '')
+
             // rewrite the <pre> element to preserve an inner <code>
             // element with a class attribute, this is in keeping with
             // how a code block is rendered by the default HTML renderer
@@ -79,6 +85,13 @@ function highlight(through, ast, opts) {
               next.literal = next.literal.replace(
                 /^<pre>/, '<pre><code class="language-' + src + '">');
               next.literal = next.literal.replace(/<\/pre>/, '</code></pre>');
+            }
+
+            if(opts.lines && opts.colons) {
+              // remove colons from line numbers
+              next.literal = next.literal
+                .replace(
+                  /(<span class="linenum">\s*[0-9]+):(<\/span>)/g, '$1$2')
             }
 
             // write the parsed HTML blocks to the stream

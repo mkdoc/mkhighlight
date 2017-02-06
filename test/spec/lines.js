@@ -18,7 +18,7 @@ function assert(result) {
 }
 
 describe('mkhighlight:', function() {
-  
+
   it('should highlight code block w/ numbered lines', function(done) {
     var source = 'test/fixtures/code-block.md'
       , target = 'target/code-block.json.log'
@@ -34,9 +34,10 @@ describe('mkhighlight:', function() {
           input: input,
           output: output,
           transforms: [highlight],
-          lines: true
+          lines: true,
+          colons: true
         };
-    
+
     transform(opts);
 
     output.once('finish', function() {
