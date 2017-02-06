@@ -2,7 +2,7 @@ var spawn = require('child_process').spawn
   , COMMAND = 'source-highlight';
 
 /**
- *  For each code block with an info string call source-highlight(1) and 
+ *  For each code block with an info string call source-highlight(1) and
  *  rewrite the output nodes to include the highlighted response.
  *
  *  @function highlight
@@ -26,7 +26,7 @@ function highlight(through, ast, opts) {
     if(Node.is(chunk, Node.CODE_BLOCK) && (opts.src || chunk.info)) {
       var src = opts.src || chunk.info.split(/\s+/)[0]
         , literal = chunk.literal
-        , out = opts.out || 'html'
+        , out = opts.out || 'html-css'
         , args
         , result = new Buffer(0);
 
@@ -45,7 +45,7 @@ function highlight(through, ast, opts) {
       // number source code lines
       if(opts.lines) {
         literal = literal.replace(/\n$/, '');
-        args.push('--line-number= '); 
+        args.push('--line-number= ');
       }
 
       var ps = spawn(COMMAND, args);
@@ -73,7 +73,7 @@ function highlight(through, ast, opts) {
             next = doc.firstChild;
 
             // rewrite the <pre> element to preserve an inner <code>
-            // element with a class attribute, this is in keeping with 
+            // element with a class attribute, this is in keeping with
             // how a code block is rendered by the default HTML renderer
             if(opts.preserve) {
               next.literal = next.literal.replace(
@@ -83,7 +83,7 @@ function highlight(through, ast, opts) {
 
             // write the parsed HTML blocks to the stream
             while(next) {
-              scope.push(Node.serialize(next)); 
+              scope.push(Node.serialize(next));
               next = next.next;
             }
 
@@ -95,7 +95,7 @@ function highlight(through, ast, opts) {
 
           cb();
         }else{
-          cb(null, chunk); 
+          cb(null, chunk);
         }
       })
 
