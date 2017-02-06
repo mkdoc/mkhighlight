@@ -66,7 +66,8 @@ mkcat README.md | mkhigh --lines | mkpage | mkhtml > README.html
 ## Help
 
 ```
-Usage: mkhigh [options]
+Usage: mkhigh [-lph] [--lines] [--preserve] [--help] [--version] [--out=<val>]
+              [--src=<lang>] [--alias-[NAME]=<val...>]
 
   Highlight code blocks.
 
@@ -79,7 +80,7 @@ Options
   -h, --help              Display help and exit
   --version               Print the version and exit
 
-mktransform@1.0.4
+mkhighlight@1.0.1
 ```
 
 ## API
@@ -111,7 +112,7 @@ MIT
 
 ---
 
-Created by [mkdoc](https://github.com/mkdoc/mkdoc) on April 18, 2016
+Created by [mkdoc](https://github.com/mkdoc/mkdoc) on February 6, 2017
 
 [source-highlight]: https://www.gnu.org/software/src-highlite/source-highlight.html
 [mkdoc]: https://github.com/mkdoc/mkdoc
