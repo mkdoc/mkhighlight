@@ -83,7 +83,7 @@ function highlight(through, ast, opts) {
             // how a code block is rendered by the default HTML renderer
             if(opts.preserve) {
               next.literal = next.literal.replace(
-                /^<pre>/, '<pre><code class="language-' + src + '">');
+                /^<pre>/, '<pre class="source"><code class="language-' + src + '">');
               next.literal = next.literal.replace(/<\/pre>/, '</code></pre>');
             }
 

@@ -11,7 +11,7 @@ function assert(result) {
   expect(result[0].type).to.eql(Node.DOCUMENT);
 
   expect(result[1].type).to.eql(Node.HTML_BLOCK);
-  expect(/^<pre><code class="language-javascript">/.test(result[1].literal))
+  expect(/^<pre class="source"><code class="language-javascript">/.test(result[1].literal))
     .to.eql(true);
 
   // eof main document
@@ -19,7 +19,7 @@ function assert(result) {
 }
 
 describe('mkhighlight:', function() {
-  
+
   it('should highlight code block w/ preserve', function(done) {
     var source = 'test/fixtures/code-block.md'
       , target = 'target/code-block.json.log'
@@ -37,7 +37,7 @@ describe('mkhighlight:', function() {
           transforms: [highlight],
           preserve: true
         };
-    
+
     transform(opts);
 
     output.once('finish', function() {
